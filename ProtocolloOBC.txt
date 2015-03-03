@@ -1,0 +1,72 @@
+
+
+Definizione protocollo  OBC-IO "OnBoardComputer I/O controller" (Scheda custom con micro atmel) <->  OBC  "OnBoardComputer" (Tablet android)
+
+
+Il protocollo attualmente è composto da una serie di semplici stringhe di comandi testuali, in modo da poter facilmente eseguire debug e inviare comandi manuali da una console.
+
+
+
+Comandi da OBC a OBC-IO
+
+
+PING
+
+	Inviato da OBC ad OBC-IO per verificare la presenza e comunicazione. OBC-IO deve rispondere con "PING"
+
+LED,n,s
+	Comando dei led presenti nel modulo RFID dietro il parabrezza. n : numero del led,  s : stato  ('0'/'1' oppure 'ON'/'OFF')
+
+DOORS,s
+	Comando di apertura/chiusura portiere. s: stato ('0': Chiude , '1': Apre)
+
+LCD,m
+	Invia un messaggio da scrivere sul display del modulo RFID. m : testo del messaggio (non delimitato da apici e con eventuali spazi)
+
+ENGINE,s
+	Comando di abilitazione del motore. s : stato ('0': disabilitato, '1' : abilitato)
+
+TARGA,t
+	Programma la scheda OBC-IO con la targa del veicolo (utilizzato per codificare la trasmissione bluetooth. Tendenzialmente non necessario per comunicazione seriale)
+
+REBOOT
+	Comanda un riavvio della scheda OBC-IO
+
+CHARGE,s
+	Comanda la linea di alimentazione e ricarica del tablet. s : stato ('1' oppure 'ON'  : attiva la carica ,  '0' oppure 'OFF' : disattiva la ricarica)
+
++	
+	Attiva invio periodico stringa stato veicolo
+-
+	Disattiva invio periodico stringa stato veicolo	
+
+
+
+
+Segnali inviati da OBC-IO a OBC :
+
+!STARTED
+	Segnala il boot della scheda OBC-IO
+RFID id
+	Segnala l'evento di passaggio di una card sul lettore rfid. id: identificativo univoco della card. Codificato come stringa esadecimale.
+
+!CAR1 status
+	Stringa inviata periodicamente (tip. 5 sec) con lo stato del veicolo. Lo status è una stringa di attributi del tipo  KEY1=val1,KEY2=val2,....
+	Lo status viene analizzato da OBC, le eventuali chiavi sconosciute vengono ignorate senza errori. Attualmente le chiavi principali sono :
+	RPM= giri motore
+	LVL= livello carburante (in litri)
+	SPD= velocità veicolo
+	KM=  chilometraggio assoluto veicolo
+	AV=  tensione batteria
+	Q=   Quadro acceso (1/0)
+	VER= Versione firmware (stringa)
+	
+
+
+NOte:
+
+* Tutti i comandi,segnali e parametri sono case insensitive
+* Tutti i comandi ricevuti possono essere terminati da CR o da LF o CR+LF
+* Tutti i segnali sono terminalti da CR
+	
+
