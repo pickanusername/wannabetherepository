@@ -14,7 +14,7 @@ session_start();
 
 $_SESSION["but"] = $N1;
 $_SESSION["testo"] = $B1;
-$_SESSION["utente"] = "SMSHY8YFB8Z1JHFFQD139:YHFODFXUGD9IE04U1PK0PIDKZ76SVFXO";
+$_SESSION["utente"] = "111:111";
 
 ?><script>
 var ww = '';
